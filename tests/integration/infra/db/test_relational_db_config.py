@@ -1,11 +1,21 @@
 from sqlalchemy.orm import Session
-from src.infra.db.relational_db import DBConnectionHandler
+from src.infra.db.relational_db import Base, DBConnectionHandler
 
 
 class TestDBConnectionHandler:
     """
     Test class for DBConnectionHandler.
     """
+
+    def test_create_db(self):
+        # Initialize the DBConnectionHandler
+        db_handler = DBConnectionHandler()
+
+        # Call the create_db method
+        db_handler.create_db()
+
+        # Assert that the tables are created
+        assert len(Base.metadata.tables) > 0
 
     def test_get_db(self):
         """
