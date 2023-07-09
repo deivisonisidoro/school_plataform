@@ -1,2 +1,2 @@
 from .fixtures import *
-from src.infra.models import *
+from src.infra.db.models import *
