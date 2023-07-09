@@ -1,1 +1,1 @@
-from .entities import *
+from .infra.entities import *

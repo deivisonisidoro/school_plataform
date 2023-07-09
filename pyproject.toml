@@ -10,6 +10,7 @@ packages = [{include = "school_plataform", from = "src"}]
 python = "^3.10"
 pydantic = {version = "^2.0.2", extras = ["email"]}
 pylint = "^2.17.4"
+sqlalchemy = "^2.0.18"
 
 
 
