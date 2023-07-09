@@ -1,6 +1,7 @@
-from pydantic.dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
+from pydantic.dataclasses import dataclass
+
 
 @dataclass
 class UserEntity:
@@ -27,4 +28,3 @@ class UserEntity:
             str: A string representation of the user.
         """
         return f"User(id={self.id}, name={self.name}, email={self.email})"
-
