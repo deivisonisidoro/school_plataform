@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy import Column, DateTime, Integer, String, UniqueConstraint
 from sqlalchemy.sql import func
 from src.infra.db.relational_db import Base
 
@@ -44,3 +44,5 @@ class UserModel(Base):
     email = Column(String(255), unique=True, index=True, nullable=False, info={"max_length": 255})
     password = Column(String, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    __table_args__ = (UniqueConstraint("email", name="uq_users_email"),)
