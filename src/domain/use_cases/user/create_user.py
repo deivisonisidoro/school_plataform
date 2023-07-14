@@ -1,23 +1,23 @@
 from abc import ABC, abstractmethod
-from pydantic.dataclasses import dataclass
+from dataclasses import dataclass
 
-from applications.dtos.user import UserDTO
-from domain.repositories.user import UserRepositoryInterface
+from src.applications.dtos.user import UserDTO
+from src.domain.repositories.user import UserRepositoryInterface
 from src.domain.entities.user import UserEntity
 
 
 @dataclass
-class UserServiceInterface(ABC):
+class CreateUserUseCaseInterface(ABC):
     """
-    Interface for user services.
+    Interface for the CreateUser use case.
 
-    This interface defines the contract for user services and enforces the implementation of all methods.
+    This interface defines the contract for the CreateUser use case and enforces the implementation of
+    the create_user method.
 
     Attributes:
         user_repository (UserRepositoryInterface): The user repository interface.
         user_entity (UserEntity): The user entity class.
         user_dto (UserDTO): The user DTO class.
-
     """
 
     user_repository: UserRepositoryInterface
@@ -35,3 +35,4 @@ class UserServiceInterface(ABC):
         Returns:
             UserDTO: The created user DTO.
         """
+        pass

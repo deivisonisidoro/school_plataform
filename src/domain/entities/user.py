@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from pydantic.dataclasses import dataclass
+from dataclasses import dataclass
 
 
 @dataclass
@@ -19,7 +19,7 @@ class UserEntity:
     name: str
     email: str
     password: str
-    created_at: datetime
+    created_at: Optional[datetime]
 
     def __str__(self):
         """Return a string representation of the user.

@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from sqlalchemy.orm import Session
-from pydantic.dataclasses import dataclass
+from dataclasses import dataclass
 
-from applications.dtos import UserDTO
+from src.applications.dtos import UserDTO
 
 
 @dataclass

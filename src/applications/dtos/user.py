@@ -1,9 +1,10 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel
+from dataclasses import dataclass
 
 
-class UserDTO(BaseModel):
+@dataclass
+class UserDTO:
     """DTO (Data Transfer Object) for representing a user entity.
 
     Attributes:
@@ -19,8 +20,3 @@ class UserDTO(BaseModel):
     email: str
     password: str
     created_at: Optional[datetime]
-
-    class Config:
-        """Configuration for the Pydantic model."""
-
-        orm_mode = True

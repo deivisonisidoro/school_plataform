@@ -20,6 +20,7 @@ pylint = "^2.17.4"
 flake8 = "^6.0.0"
 black = "^23.3.0"
 pre-commit = "^3.3.3"
+pytest-mock = "^3.11.1"
 
 [tool.black]
 line-length = 120

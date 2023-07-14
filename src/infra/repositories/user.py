@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
-from pydantic.dataclasses import dataclass
+from dataclasses import dataclass
 
-from applications.dtos import UserDTO
+from src.applications.dtos import UserDTO
 from src.infra.db.models import UserModel
-from domain.repositories.user import UserRepositoryInterface
+from src.domain.repositories.user import UserRepositoryInterface
 
 
 @dataclass
