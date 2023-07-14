@@ -8,13 +8,17 @@ class TestDBConnectionHandler:
     """
 
     def test_create_db(self):
-        # Initialize the DBConnectionHandler
+        """Test the creation of the database.
+
+        This test verifies if the database is successfully created.
+
+        It checks if there are tables defined in the Base.metadata.tables.
+
+        """
         db_handler = DBConnectionHandler()
 
-        # Call the create_db method
         db_handler.create_db()
 
-        # Assert that the tables are created
         assert len(Base.metadata.tables) > 0
 
     def test_get_db(self):
