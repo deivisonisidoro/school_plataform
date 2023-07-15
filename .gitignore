@@ -26,3 +26,5 @@ report.html
 
 # Ignore .env file
 .env
+
+.coverage
