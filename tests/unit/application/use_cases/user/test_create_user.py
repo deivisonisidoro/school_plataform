@@ -1,14 +1,16 @@
 from pytest_mock import MockerFixture
+from sqlalchemy.orm import Session
+
 
 from src.applications.dtos.user import UserDTO
-from src.domain.repositories.user import UserRepositoryInterface
 from src.applications.use_cases.user.create_user import CreateUserUseCase
+from src.infra.repositories.user import UserRepository
 
 
 class TestCreateUserUseCase:
     """Test suite for the CreateUserUseCase class."""
 
-    def test_create_user_correctly(self, mocker: MockerFixture):
+    def test_create_user_correctly(self, mocker: MockerFixture, db_session: Session):
         """
         Test the create_user method of CreateUserUseCase when a user is created correctly.
 
@@ -20,7 +22,7 @@ class TestCreateUserUseCase:
             mocker (MockerFixture): The pytest mocker fixture.
 
         """
-        user_repository = mocker.Mock(spec=UserRepositoryInterface)
+        user_repository = mocker.Mock(spec=UserRepository(db_session))
         user_service = CreateUserUseCase(user_repository=user_repository)
 
         user_dto = UserDTO(

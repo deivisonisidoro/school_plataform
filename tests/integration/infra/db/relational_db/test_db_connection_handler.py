@@ -7,7 +7,9 @@ class TestDBConnectionHandler:
     Test class for DBConnectionHandler.
     """
 
-    def test_create_db(self):
+    def test_create_db(
+        self,
+    ):
         """Test the creation of the database.
 
         This test verifies if the database is successfully created.
