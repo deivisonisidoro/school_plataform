@@ -45,8 +45,8 @@ class DBConnectionHandler:
         Yields:
             Session: A SQLAlchemy session object.
         """
-        session_local = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
-        db = session_local()
+        SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
+        db = SessionLocal()
         try:
             yield db
         finally:

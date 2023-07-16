@@ -25,8 +25,6 @@ class CreateUserUseCase(CreateUserUseCaseInterface):
     """
 
     user_repository: UserRepositoryInterface
-    user_entity: UserEntity = UserEntity
-    user_dto: UserDTO = UserDTO
 
     def create_user(self, user_dto: UserDTO) -> UserDTO:
         """
