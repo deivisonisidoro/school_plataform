@@ -3,7 +3,6 @@ from dataclasses import dataclass
 
 
 from src.applications.dtos import UserDTO
-from src.infra.db.relational_db.db_connection_handler import DBConnectionHandler
 from src.infra.db.relational_db.models import UserModel
 from src.domain.repositories.user import UserRepositoryInterface
 

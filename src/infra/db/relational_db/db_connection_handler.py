@@ -1,53 +1,42 @@
-from sqlalchemy.orm import Session
-from contextlib import contextmanager
-from sqlalchemy.orm import sessionmaker
+import os
 from sqlalchemy import create_engine
-
+from sqlalchemy.orm import sessionmaker
 from .declarative_base import Base
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SQLALCHEMY_DATABASE_URL = os.getenv("SQLALCHEMY_DATABASE_URL")
+
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL,
+)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-class DBConnectionHandler:
+def create_db():
     """
-    Handles the database connection and session management.
+    Create all database tables.
+
+    This function creates all database tables defined in the models.py file, based on the metadata created by the declarative base.
+
     """
+    Base.metadata.create_all(bind=engine)
 
-    def __init__(
-        self,
-        connection_string: str = "sqlite:///:memory:",
-        base: Base = Base,
-    ):
-        """
-        Initialize the DBConnectionHandler.
 
-        Args:
-            connection_string (str, optional): The database connection string. Defaults to "sqlite:///:memory:".
-            base (Base, optional): The SQLAlchemy declarative base class. Defaults to Base.
-        """
-        self.engine = create_engine(connection_string)
-        self.base = base
+def get_db():
+    """
+    Get a database session.
 
-    def create_db(self):
-        """
-        Create all database tables.
+    This function returns a context manager that provides a SQLAlchemy session. The session is closed automatically when the context manager is exited.
 
-        This function creates all database tables defined in the models.py file, based on the metadata created by the declarative base.
+    Returns:
+        generator: A generator that yields a database session.
 
-        """
-        self.base.metadata.create_all(bind=self.engine)
-
-    @contextmanager
-    def get_db(self) -> Session:
-        """
-        Get a database session.
-
-        This function returns a SQLAlchemy session object.
-
-        Yields:
-            Session: A SQLAlchemy session object.
-        """
-        SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
-        db = SessionLocal()
-        try:
-            yield db
-        finally:
-            db.close()
+    """
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

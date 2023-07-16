@@ -3,11 +3,15 @@ import os
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.responses import RedirectResponse
+from fastapi.responses import RedirectResponse
 from src.infra.fast_api.routers import router
+from src.infra.db.relational_db import Base, engine
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(BASE_DIR, ".env"))
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="School Platform API",
@@ -28,8 +32,24 @@ app.add_middleware(
 )
 
 
-@app.get("/", tags=["Doc Redirect"])
-def redirect():
+@app.get(
+    "/",
+    tags=["Doc Redirect"],
+    summary="Redirect to API Documentation",
+    description="Redirects to the Swagger API documentation page.",
+    response_class=RedirectResponse,
+)
+def redirect_api_documentation():
+    """
+    Redirect to API Documentation.
+
+    This endpoint redirects the user to the Swagger API documentation page.
+    The Swagger UI provides a user-friendly interface to explore and interact with the API endpoints.
+
+    Returns:
+        RedirectResponse: A redirect response to the Swagger API documentation page.
+
+    """
     return RedirectResponse(url="/swagger/doc")
 
 

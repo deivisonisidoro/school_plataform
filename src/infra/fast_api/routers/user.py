@@ -1,11 +1,13 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
 from datetime import datetime
 
 
 from src.applications.dtos.user import UserDTO
 from src.applications.use_cases.user.create_user import CreateUserUseCase
 
-from src.infra.db.relational_db.db_connection_handler import DBConnectionHandler
+from src.infra.db.relational_db import get_db
 from src.infra.fast_api.schemas import UserCreate, UserOut
 from src.infra.repositories.user import UserRepository
 
@@ -19,7 +21,7 @@ router = APIRouter()
     summary="Create a new user",
     description="Create a new user with the provided data.",
 )
-def create_user(user: UserCreate):
+def create_user(user: UserCreate, db: Session = Depends(get_db)):
     """
     Create a new user.
 
@@ -33,8 +35,7 @@ def create_user(user: UserCreate):
         User: The created user details.
 
     """
-    db_session = DBConnectionHandler().get_db()
-    user_repository = UserRepository(db=db_session)
+    user_repository = UserRepository(db=db)
     user_create_use_case = CreateUserUseCase(user_repository=user_repository)
     user_dto = UserDTO(
         id=None,

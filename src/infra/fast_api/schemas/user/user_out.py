@@ -17,7 +17,7 @@ class UserOut(UserBase):
     id: int
     created_at: datetime
 
-    class Config:
+    class ConfigDict:
         """
         Pydantic configuration for the User schema.
 
