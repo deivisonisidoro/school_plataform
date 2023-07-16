@@ -11,7 +11,6 @@ from src.infra.db.relational_db import Base, engine
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="School Platform API",
