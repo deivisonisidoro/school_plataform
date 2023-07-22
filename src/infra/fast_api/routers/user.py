@@ -17,7 +17,7 @@ router = APIRouter()
 @router.post(
     "/",
     status_code=status.HTTP_201_CREATED,
-    response_model=UserOut,
+    response_model=DefaultResponse,
     summary="Create a new user",
     description="Create a new user with the provided data.",
 )
@@ -44,7 +44,19 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
         password=user.password,
         created_at=datetime.now(),
     )
-    return user_create_use_case.create_user(user_dto)
+    user = user_create_use_case.create_user(user_dto)
+    detail = user.get("detail")
+    status_code = user.get("status_code")
+    if status_code != 201:
+        raise HTTPException(status_code=status_code, detail=user.get("detail"))
+    user_out = UserOut(
+        id=detail.id,
+        email=detail.email,
+        name=detail.name,
+        created_at=detail.created_at,
+    )
+
+    return DefaultResponse(detail=user_out, status_code=status_code)
 
 
 @router.get(

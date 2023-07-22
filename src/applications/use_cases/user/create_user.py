@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from src.applications.dtos.user import UserDTO
+from src.domain.enums.user_error import UserErrorsEnum
 from src.domain.repositories.user import UserRepositoryInterface
 from src.domain.use_cases.user.create_user import CreateUserUseCaseInterface
 from src.domain.entities.user import UserEntity
@@ -25,6 +26,9 @@ class CreateUserUseCase(CreateUserUseCaseInterface):
     """
 
     user_repository: UserRepositoryInterface
+    user_dto = UserDTO
+    user_entity = UserEntity
+    user_errors_enum = UserErrorsEnum
 
     def create_user(self, user_dto: UserDTO) -> UserDTO:
         """
@@ -34,21 +38,13 @@ class CreateUserUseCase(CreateUserUseCaseInterface):
             user_dto (UserDTO): The user DTO containing the user data.
 
         Returns:
-            UserDTO: The created user DTO.
-
+            user_dto (UserDTO): The created user DTO.
         """
-        user_entity = self.user_entity(
-            id=user_dto.id,
-            name=user_dto.name,
-            email=user_dto.email,
-            password=user_dto.password,
-            created_at=user_dto.created_at,
-        )
-        user_dto = self.user_dto(
-            id=user_entity.id,
-            name=user_entity.name,
-            email=user_entity.email,
-            password=user_entity.password,
-            created_at=user_entity.created_at,
-        )
-        return self.user_repository.create_user(user_dto)
+        try:
+            user = self.user_repository.get_user_by_email(email=user_dto.email)
+            if user:
+                return {"detail": self.user_errors_enum.EMAIL_ALREADY_EXISTS.value, "status_code": 400}
+            user_created = self.user_repository.create_user(user_dto)
+            return {"detail": user_created, "status_code": 201}
+        except Exception:
+            return {"detail": self.user_errors_enum.DEFAULT_ERROR.value, "status_code": 500}

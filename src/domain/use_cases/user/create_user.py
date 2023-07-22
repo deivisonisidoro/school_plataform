@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
 from src.applications.dtos.user import UserDTO
+from src.domain.enums.user_error import UserErrorsEnum
 from src.domain.repositories.user import UserRepositoryInterface
 from src.domain.entities.user import UserEntity
 
@@ -23,6 +24,7 @@ class CreateUserUseCaseInterface(ABC):
     user_repository: UserRepositoryInterface
     user_entity: UserEntity = UserEntity
     user_dto: UserDTO = UserDTO
+    user_errors_enum = UserErrorsEnum
 
     @abstractmethod
     def create_user(self, user_dto: UserDTO) -> UserDTO:

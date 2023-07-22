@@ -43,7 +43,7 @@ class GetUserByEmailUseCase(GetUserByEmailUseCaseInterface):
                 it returns a dictionary with error details using the user_errors_enum.
 
         Raises:
-            Exception: If there are errors related to data access, connectivity,
+            : If there are errors related to data access, connectivity,
                 or other issues while retrieving the user.
 
         """
