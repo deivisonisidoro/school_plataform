@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from sqlalchemy.orm import Session
 from dataclasses import dataclass
+from sqlalchemy.orm import Session
 
 from src.applications.dtos import UserDTO
 
@@ -24,4 +24,18 @@ class UserRepositoryInterface(ABC):
 
         Returns:
             user_dto (UserDTO): The created user DTO.
+        """
+
+    @abstractmethod
+    def get_user_by_email(self, email: str) -> UserDTO:
+        """Get a user by their email.
+
+        This method should be implemented by the concrete subclasses to retrieve
+        a user entity from the data source based on their email.
+
+        Args:
+            email (str): The email of the user to retrieve.
+
+        Returns:
+            user_dto (UserDTO): The user DTO representing the user's information.
         """

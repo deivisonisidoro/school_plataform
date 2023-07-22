@@ -35,4 +35,3 @@ class CreateUserUseCaseInterface(ABC):
         Returns:
             UserDTO: The created user DTO.
         """
-        pass

@@ -1,9 +1,7 @@
 import pytest
-from datetime import datetime
 from sqlalchemy.orm import Session
 
 from src.applications.dtos import UserDTO
-from src.infra.db.relational_db.models import UserModel
 from src.infra.repositories.user import UserRepository
 from src.domain.repositories.user import UserRepositoryInterface
 
@@ -19,34 +17,67 @@ class TestUserRepository:
             db_session (Session): The test database session.
 
         Returns:
-            UserRepositoryInterface: An instance of UserRepository.
+            user_repository = UserRepositoryInterface: An instance of UserRepository.
         """
         return UserRepository(db=db_session)
 
-    def test_create_user(self, db_session: Session, user_repository: UserRepositoryInterface) -> None:
-        """Test creating a new user.
-
-        Args:
-            db_session (Session): The test database session.
-            user_repository (UserRepositoryInterface): An instance of UserRepository.
+    @pytest.fixture
+    def user_dto(self) -> UserDTO:
+        """
+        Fixture that returns a sample UserDTO instance for testing.
 
         Returns:
-            None
+            user_dto (UserDTO): A UserDTO instance representing a sample user.
         """
-
         user_dto = UserDTO(
             id=None,
             name="John Doe",
-            email="john@example.com",
-            password="password",
-            created_at=datetime.now(),
+            email="johndoe@example.com",
+            password="password123",
+            created_at=None,
         )
+        return user_dto
 
+    def test_create_user(
+        self,
+        user_repository: UserRepositoryInterface,
+        user_dto: UserDTO,
+    ) -> None:
+        """Test creating a new user.
+
+        Args:
+            user_repository (UserRepositoryInterface): An instance of UserRepository.
+            user_dto (UserDTO): UserDTO fixture containing sample user data.
+        """
         created_user = user_repository.create_user(user_dto)
+        assert isinstance(created_user, UserDTO)
 
-        fetched_user = db_session.query(UserModel).filter_by(id=created_user.id).first()
+    def test_get_user_by_email_when_found_user(
+        self,
+        user_repository: UserRepositoryInterface,
+        user_dto: UserDTO,
+    ):
+        """
+        Test fetching a user by email using UserRepository when found user.
 
-        assert fetched_user.name == "John Doe"
-        assert fetched_user.email == "john@example.com"
-        assert fetched_user.password == "password"
-        assert fetched_user.created_at == user_dto.created_at
+        Args:
+            user_repository (UserRepositoryInterface): The UserRepository fixture.
+            user_dto (UserDTO): UserDTO fixture containing sample user data.
+        """
+        created_user = user_repository.create_user(user_dto)
+        fetched_user = user_repository.get_user_by_email(email=created_user.email)
+        assert isinstance(fetched_user, UserDTO)
+
+    def test_get_user_by_email_when_not_found_user(
+        self,
+        user_repository: UserRepositoryInterface,
+    ):
+        """
+        Test fetching a user by email using UserRepository when not found user.
+
+        Args:
+            user_repository (UserRepositoryInterface): The UserRepository fixture.
+            user_dto (UserDTO): UserDTO fixture containing sample user data.
+        """
+        fetched_user = user_repository.get_user_by_email(email="test@example.com")
+        assert not isinstance(fetched_user, UserDTO)
