@@ -1,4 +1,4 @@
-# School Platform - Readme
+# School Platform
 
 Welcome to the School Platform project! This platform aims to facilitate the creation of school platforms using the Clean Architecture approach. The project is structured into three main folders within the `src` directory: `application`, `infra`, and `domain`. It utilizes several technologies and tools, including SQLAlchemy, FastAPI, Poetry, pylint, flake8, black, and pre-commit.
 
@@ -62,7 +62,7 @@ git clone https://github.com/deivisonisidoro/school_plataform.git
 2. **Install dependencies using Poetry**: Move into the project directory and install the required dependencies with Poetry:
 ```bash
 cd school_plataform
-poetry instal
+poetry install
  ```
 3. **Database Configuration**: Set up your database configuration by creating a .env file in the root directory of the project. You can use the provided .env.example file as a template.
 4. **Run the FastAPI server**: `poetry run uvicorn src.infra.fast_api.server:app --reload`
