@@ -1,16 +1,17 @@
 version: "3.9"
 services:
-  # FastAPI application
-  app:
-    build: .
+  fastapi:
+    image: python-3.10-fastapi
+    build:
+      context: .
     ports:
       - "8000:8000"
-    depends_on:
-      - db
     env_file:
       - .env
+    environment:
+      - SQLALCHEMY_DATABASE_URL=${SQLALCHEMY_DATABASE_URL}
+    command: ["bash", "-c", "poetry run uvicorn src.infra.fast_api.server:app --host 0.0.0.0 --port 8000"]
 
-  # PostgreSQL database
   db:
     image: postgres:latest
     environment:
@@ -18,9 +19,6 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:5432"
     volumes:
-      - pg_data:/var/lib/postgresql/data
-
-volumes:
-  pg_data:
+      - ./db:/var/lib/postgresql/data
