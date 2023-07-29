@@ -41,10 +41,12 @@ class CreateUserUseCase(CreateUserUseCaseInterface):
             user_dto (UserDTO): The created user DTO.
         """
         try:
-            user = self.user_repository.get_user_by_email(email=user_dto.email)
+            user_entity = user_dto.to_domain()
+            dto = user_dto.to_dto(user_entity)
+            user = self.user_repository.get_user_by_email(email=dto.email)
             if user:
                 return {"detail": self.user_errors_enum.EMAIL_ALREADY_EXISTS.value, "status_code": 400}
-            user_created = self.user_repository.create_user(user_dto)
+            user_created = self.user_repository.create_user(dto)
             return {"detail": user_created, "status_code": 201}
         except Exception:
             return {"detail": self.user_errors_enum.DEFAULT_ERROR.value, "status_code": 500}

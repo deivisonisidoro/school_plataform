@@ -41,16 +41,13 @@ class GetUserByEmailUseCase(GetUserByEmailUseCaseInterface):
         Returns:
             dict: A dictionary containing the user details if found. If the user is not found,
                 it returns a dictionary with error details using the user_errors_enum.
-
-        Raises:
-            : If there are errors related to data access, connectivity,
-                or other issues while retrieving the user.
-
         """
         try:
-            user = self.user_repository.get_user_by_email(email=email)
-            if not user:
+            user_dto = self.user_repository.get_user_by_email(email=email)
+            if user_dto is None:
                 return {"detail": self.user_errors_enum.READ_NOT_FOUND.value, "status_code": 404}
-            return {"detail": user, "status_code": 200}
+            user_entity = user_dto.to_domain()
+            dto = user_dto.to_dto(user_entity)
+            return {"detail": dto, "status_code": 200}
         except Exception:
             return {"detail": self.user_errors_enum.DEFAULT_ERROR.value, "status_code": 500}
