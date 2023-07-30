@@ -45,8 +45,8 @@ class CreateUserUseCase(CreateUserUseCaseInterface):
             dto = user_dto.to_dto(user_entity)
             user = self.user_repository.get_user_by_email(email=dto.email)
             if user:
-                return {"detail": self.user_errors_enum.EMAIL_ALREADY_EXISTS.value, "status_code": 400}
+                return {"data": self.user_errors_enum.EMAIL_ALREADY_EXISTS.value, "status_code": 400, "success": False}
             user_created = self.user_repository.create_user(dto)
-            return {"detail": user_created, "status_code": 201}
+            return {"data": user_created, "status_code": 201, "success": True}
         except Exception:
-            return {"detail": self.user_errors_enum.DEFAULT_ERROR.value, "status_code": 500}
+            return {"data": self.user_errors_enum.DEFAULT_ERROR.value, "status_code": 500, "success": False}

@@ -27,17 +27,25 @@ class TestCreateUserUseCase:
         user_service = CreateUserUseCase(user_repository=user_repository)
 
         user_dto = UserDTO(
-            id=None, name="John Doe", email="johndoe@example.com", password="password123", created_at=None
+            id=None,
+            name="John Doe",
+            email="johndoe@example.com",
+            password="password123",
+            created_at=None,
         )
         created_user_dto = UserDTO(
-            name="John Doe", email="johndoe@example.com", password="password123", id=None, created_at=None
+            name="John Doe",
+            email="johndoe@example.com",
+            password="password123",
+            id=None,
+            created_at=None,
         )
 
         user_repository.create_user.return_value = created_user_dto
         user_repository.get_user_by_email.return_value = None
         result = user_service.create_user(user_dto)
 
-        assert {"detail": result, "status_code": 201}
+        assert {"data": result, "status_code": 201}
         user_repository.create_user.assert_called_once_with(user_dto)
 
     def test_create_user_when_the_user_has_already_been_created(self, mocker: MockerFixture, db_session: Session):
@@ -66,4 +74,4 @@ class TestCreateUserUseCase:
         user_repository.get_user_by_email.return_value = created_user_dto
         result = user_service.create_user(user_dto)
 
-        assert result == {"detail": UserErrorsEnum.EMAIL_ALREADY_EXISTS.value, "status_code": 400}
+        assert result == {"data": UserErrorsEnum.EMAIL_ALREADY_EXISTS.value, "status_code": 400, "success": False}

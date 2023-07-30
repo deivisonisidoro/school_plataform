@@ -3,13 +3,13 @@ from dataclasses import dataclass
 from src.applications.dtos.user import UserDTO
 from src.domain.enums.user_error import UserErrorsEnum
 from src.domain.repositories.user import UserRepositoryInterface
-from src.domain.use_cases.user.get_user_by_email import GetUserByEmailUseCaseInterface
+from src.domain.use_cases.user.get_user import GetUserUseCaseInterface
 
 
 @dataclass
-class GetUserByEmailUseCase(GetUserByEmailUseCaseInterface):
+class GetUserUseCase(GetUserUseCaseInterface):
     """
-    Concrete implementation of the GetUserByEmailUseCaseInterface.
+    Concrete implementation of the GetUserUseCaseInterface.
 
     This use case retrieves a user from the data source using their email.
 
@@ -31,7 +31,7 @@ class GetUserByEmailUseCase(GetUserByEmailUseCaseInterface):
     user_dto: UserDTO = UserDTO
     user_errors_enum = UserErrorsEnum
 
-    def get_user(self, email: str) -> dict:
+    def get_user_by_email(self, email: str) -> dict:
         """
         Retrieves a user by their email from the data source.
 
@@ -45,9 +45,9 @@ class GetUserByEmailUseCase(GetUserByEmailUseCaseInterface):
         try:
             user_dto = self.user_repository.get_user_by_email(email=email)
             if user_dto is None:
-                return {"detail": self.user_errors_enum.READ_NOT_FOUND.value, "status_code": 404}
+                return {"data": self.user_errors_enum.READ_NOT_FOUND.value, "success": False, "status_code": 404}
             user_entity = user_dto.to_domain()
             dto = user_dto.to_dto(user_entity)
-            return {"detail": dto, "status_code": 200}
+            return {"data": dto, "success": True, "status_code": 200}
         except Exception:
-            return {"detail": self.user_errors_enum.DEFAULT_ERROR.value, "status_code": 500}
+            return {"data": self.user_errors_enum.DEFAULT_ERROR.value, "success": False, "status_code": 500}

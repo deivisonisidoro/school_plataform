@@ -6,7 +6,7 @@ from src.domain.repositories.user import UserRepositoryInterface
 
 
 @dataclass
-class GetUserByEmailUseCaseInterface(ABC):
+class GetUserUseCaseInterface(ABC):
     """
     Abstract class representing the use case for getting a user by email.
 
@@ -28,7 +28,7 @@ class GetUserByEmailUseCaseInterface(ABC):
     user_errors_enum = UserErrorsEnum
 
     @abstractmethod
-    def get_user(self, email: str) -> dict:
+    def get_user_by_email(self, email: str) -> dict:
         """
         Abstract method to retrieve a user by their email.
 

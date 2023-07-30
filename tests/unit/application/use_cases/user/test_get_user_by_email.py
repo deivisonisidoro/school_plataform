@@ -3,16 +3,16 @@ from pytest_mock import MockerFixture
 from sqlalchemy.orm import Session
 
 from src.applications.dtos.user import UserDTO
-from src.applications.use_cases.user.get_user_by_email import GetUserByEmailUseCase
+from src.applications.use_cases.user.get_user_by_email import GetUserUseCase
 from src.domain.enums.user_error import UserErrorsEnum
 from src.domain.repositories.user import UserRepositoryInterface
-from src.domain.use_cases.user.get_user_by_email import GetUserByEmailUseCaseInterface
+from src.domain.use_cases.user.get_user import GetUserUseCaseInterface
 from src.infra.repositories.user import UserRepository
 
 
 class TestGetUserByEmail:
     """
-    Test cases for the GetUserByEmailUseCase class.
+    Test cases for the GetUserUseCase class.
     """
 
     @pytest.fixture
@@ -48,66 +48,66 @@ class TestGetUserByEmail:
         return user_repository
 
     @pytest.fixture
-    def get_user_by_email_use_case(self, user_repository: UserRepositoryInterface) -> GetUserByEmailUseCaseInterface:
+    def get_user_use_case(self, user_repository: UserRepositoryInterface) -> GetUserUseCaseInterface:
         """
-        Fixture that sets up the GetUserByEmailUseCase with a mocked UserRepository.
+        Fixture that sets up the GetUserUseCase with a mocked UserRepository.
 
         Args:
             user_repository (UserRepositoryInterface): The UserRepository fixture.
 
         Returns:
-            get_user_by_email_use_case (GetUserByEmailUseCaseInterface): An instance of GetUserByEmailUseCase with the mock UserRepository.
+            get_user_use_case (GetUserUseCaseInterface): An instance of GetUserUseCase with the mock UserRepository.
         """
-        get_user_by_email_use_case = GetUserByEmailUseCase(user_repository=user_repository)
-        return get_user_by_email_use_case
+        get_user_use_case = GetUserUseCase(user_repository=user_repository)
+        return get_user_use_case
 
-    def test_get_user_when_return_a_user(
+    def test_get_user_by_email_when_return_a_user(
         self,
-        get_user_by_email_use_case: GetUserByEmailUseCaseInterface,
+        get_user_use_case: GetUserUseCaseInterface,
         user_dto: UserDTO,
         user_repository: UserRepositoryInterface,
     ) -> None:
         """
-        Test the get_user method of GetUserByEmailUseCase to ensure it returns the correct user details.
+        Test the get_user_by_email method of GetUserUseCase to ensure it returns the correct user data.
 
         Args:
-            get_user_by_email_use_case (GetUserByEmailUseCaseInterface): The GetUserByEmailUseCase fixture.
+            get_user_use_case (GetUserUseCaseInterface): The GetUserUseCase fixture.
             user_dto (UserDTO): UserDTO fixture containing sample user data.
             user_repository (UserRepositoryInterface): An instance of UserRepository.
 
         """
         user_repository.get_user_by_email.return_value = user_dto
-        result = get_user_by_email_use_case.get_user(email="johndoe@example.com")
-        assert result["detail"] == user_dto
+        result = get_user_use_case.get_user_by_email(email="johndoe@example.com")
+        assert result["data"] == user_dto
 
-    def test_get_user_when_not_found_a_user(
+    def test_get_user_by_email_when_not_found_a_user(
         self,
-        get_user_by_email_use_case: GetUserByEmailUseCaseInterface,
+        get_user_use_case: GetUserUseCaseInterface,
         user_repository: UserRepositoryInterface,
     ) -> None:
         """
-        Test the get_user method of GetUserByEmailUseCase when a user is not found.
+        Test the get_user_by_email method of GetUserUseCase when a user is not found.
 
         Args:
-            get_user_by_email_use_case (GetUserByEmailUseCaseInterface): The GetUserByEmailUseCase fixture.
+            get_user_use_case (GetUserUseCaseInterface): The GetUserUseCase fixture.
             user_repository (UserRepositoryInterface): The UserRepository fixture.
 
         """
         user_repository.get_user_by_email.return_value = None
-        result = get_user_by_email_use_case.get_user(email="test@example.com")
-        assert result["detail"] == UserErrorsEnum.READ_NOT_FOUND.value
+        result = get_user_use_case.get_user_by_email(email="test@example.com")
+        assert result["data"] == UserErrorsEnum.READ_NOT_FOUND.value
 
-    def test_get_user_when_return_unknown_error(
+    def test_get_user_by_email_when_return_unknown_error(
         self,
-        get_user_by_email_use_case: GetUserByEmailUseCaseInterface,
+        get_user_use_case: GetUserUseCaseInterface,
     ) -> None:
         """
-        Test the get_user method of GetUserByEmailUseCase when an unknown error occurs.
+        Test the get_user_by_email method of GetUserUseCase when an unknown error occurs.
 
         Args:
-            get_user_by_email_use_case (GetUserByEmailUseCaseInterface): The GetUserByEmailUseCase fixture.
+            get_user_use_case (GetUserUseCaseInterface): The GetUserUseCase fixture.
 
         """
-        get_user_by_email_use_case.user_repository.get_user_by_email.side_effect = Exception("Unknown error")
-        result = get_user_by_email_use_case.get_user(email="test@example.com")
-        assert result["detail"] == UserErrorsEnum.DEFAULT_ERROR.value
+        get_user_use_case.user_repository.get_user_by_email.side_effect = Exception("Unknown error")
+        result = get_user_use_case.get_user_by_email(email="test@example.com")
+        assert result["data"] == UserErrorsEnum.DEFAULT_ERROR.value
