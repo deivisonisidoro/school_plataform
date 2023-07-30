@@ -11,6 +11,7 @@ from src.infra.repositories.user import UserRepository
 from src.presenters.errors.http_errors import HttpErrors
 from src.presenters.controllers.user.get_user_controller import GetUserController
 from src.presenters.helpers.http_types import HttpRequest
+from src.main.interfaces import RouteInterface
 
 
 class TestGetUserController:
@@ -106,12 +107,12 @@ class TestGetUserController:
         assert response.status_code == 200
         assert response.body == user_dto
 
-    def test_route_when_query_params_is_not_passed(self, get_user_controller: GetUserController):
+    def test_route_when_query_params_is_not_passed(self, get_user_controller: RouteInterface):
         """
         Test that the route method of GetUserController returns user data when the email exists.
 
         Args:
-            get_user_controller (GetUserController): The GetUserController fixture.
+            get_user_controller (RouteInterface): The GetUserController fixture.
         """
         http_request = HttpRequest()
         get_user_controller.get_user_use_case.get_user_by_email.return_value = None
@@ -120,12 +121,12 @@ class TestGetUserController:
         assert response.status_code == HttpErrors.error_400()["status_code"]
         assert response.body == HttpErrors.error_400()["body"]
 
-    def test_route_returns_user_data_when_email_does_not_exists(self, get_user_controller: GetUserController):
+    def test_route_returns_user_data_when_email_does_not_exists(self, get_user_controller: RouteInterface):
         """
         Test that the route method of GetUserController returns user data when the email exists.
 
         Args:
-            get_user_controller (GetUserController): The GetUserController fixture.
+            get_user_controller (RouteInterface): The GetUserController fixture.
         """
         http_request = HttpRequest()
         get_user_controller.get_user_use_case.get_user_by_email.return_value = None

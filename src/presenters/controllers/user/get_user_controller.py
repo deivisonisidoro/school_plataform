@@ -3,10 +3,11 @@ from dataclasses import dataclass
 from src.domain.use_cases.user.get_user import GetUserUseCaseInterface
 from src.presenters.errors import HttpErrors
 from src.presenters.helpers.http_types import HttpRequest, HttpResponse
+from src.main.interfaces import RouteInterface
 
 
 @dataclass
-class GetUserController:
+class GetUserController(RouteInterface):
     """
     Represents a controller for handling HTTP requests related to retrieving user data.
 
