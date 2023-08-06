@@ -18,7 +18,14 @@ The `infra` folder deals with infrastructure concerns, including database intera
 
 The `domain` folder holds the domain models and entities of the School Platform. It defines the core data structures and business logic representations, providing the foundation for the entire application.
 
-### 4. `src/main`
+### 4. `src/presenters`
+
+The `presenters` folder is responsible for handling the presentation and formatting of data to be displayed in the user interface. It may include components related to data rendering, view models, templates, and other UI-related logic. By keeping the presentation logic separate from the core application logic, this folder helps maintain a clear boundary between the user interface and the underlying functionality.
+
+### 5. `src/main`
+
+The `main` folder serves as a central hub for orchestrating and initializing the application. It houses key components that contribute to the overall structure and functionality of the School Platform project.
+
 
 ## Technologies and Tools
 
