@@ -10,7 +10,7 @@ services:
       - .env
     environment:
       - SQLALCHEMY_DATABASE_URL=${SQLALCHEMY_DATABASE_URL}
-    command: ["bash", "-c", "poetry run uvicorn src.main.fast_api.configs.server:app --reload --host 0.0.0.0 --port 8000"]
+    command: ["bash", "-c", "python3 run_fast_api.py"]
 
   db:
     image: postgres:latest

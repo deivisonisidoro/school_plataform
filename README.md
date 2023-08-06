@@ -65,7 +65,7 @@ cd school_plataform
 poetry install
  ```
 3. **Database Configuration**: Set up your database configuration by creating a .env file in the root directory of the project. You can use the provided .env.example file as a template.
-4. **Run the FastAPI server**: `poetry run uvicorn src.main.fast_api.configs.server:app --reload`
+4. **Run the FastAPI server**: `python3 run_fast_api.py`
 
 Ensure you have the required Python version installed as specified in the `pyproject.toml` file.
 
