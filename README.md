@@ -18,6 +18,8 @@ The `infra` folder deals with infrastructure concerns, including database intera
 
 The `domain` folder holds the domain models and entities of the School Platform. It defines the core data structures and business logic representations, providing the foundation for the entire application.
 
+### 4. `src/main`
+
 ## Technologies and Tools
 
 The School Platform project utilizes the following technologies and tools:
