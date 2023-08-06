@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from src.infra.fast_api.schemas.user.user_base import UserBase
+from src.main.fast_api.schemas.user.user_base import UserBase
 
 
 class UserOut(UserBase):

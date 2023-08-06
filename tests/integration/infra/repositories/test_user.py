@@ -1,7 +1,7 @@
 import pytest
-from sqlalchemy.orm import Session
 
 from src.applications.dtos import UserDTO
+from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
 from src.domain.repositories.user import UserRepositoryInterface
 
@@ -10,16 +10,17 @@ class TestUserRepository:
     """Test cases for the UserRepository class."""
 
     @pytest.fixture
-    def user_repository(self, db_session: Session) -> UserRepositoryInterface:
+    def user_repository(self, db_connection: DBConnectionHandler) -> UserRepositoryInterface:
         """Create an instance of UserRepository with a test database session.
 
         Args:
-            db_session (Session): The test database session.
+            db_connection (DBConnectionHandler): A database connection handler for the test database.
 
         Returns:
             user_repository = UserRepositoryInterface: An instance of UserRepository.
         """
-        return UserRepository(db=db_session)
+        user_repository = UserRepository(db_connection=db_connection)
+        return user_repository
 
     @pytest.fixture
     def user_dto(self) -> UserDTO:
@@ -80,4 +81,5 @@ class TestUserRepository:
             user_dto (UserDTO): UserDTO fixture containing sample user data.
         """
         fetched_user = user_repository.get_user_by_email(email="test@example.com")
+
         assert not isinstance(fetched_user, UserDTO)

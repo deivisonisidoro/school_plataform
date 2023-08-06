@@ -1,16 +1,16 @@
 from pytest_mock import MockerFixture
-from sqlalchemy.orm import Session
 
 from src.applications.dtos.user import UserDTO
 from src.applications.use_cases.user.create_user import CreateUserUseCase
 from src.domain.enums.user_error import UserErrorsEnum
+from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
 
 
 class TestCreateUserUseCase:
     """Test suite for the CreateUserUseCase class."""
 
-    def test_create_user_correctly(self, mocker: MockerFixture, db_session: Session):
+    def test_create_user_correctly(self, mocker: MockerFixture, db_connection: DBConnectionHandler):
         """
         Test the create_user method of CreateUserUseCase when a user is created correctly.
 
@@ -20,10 +20,10 @@ class TestCreateUserUseCase:
 
         Args:
             mocker (MockerFixture): The pytest mocker fixture.
-            db_session (Session): The SQLAlchemy database session fixture.
+            db_connection (DBConnectionHandler): A database connection handler for the test database.
 
         """
-        user_repository = mocker.Mock(spec=UserRepository(db_session))
+        user_repository = mocker.Mock(spec=UserRepository(db_connection=db_connection))
         user_service = CreateUserUseCase(user_repository=user_repository)
 
         user_dto = UserDTO(
@@ -48,7 +48,9 @@ class TestCreateUserUseCase:
         assert {"data": result, "status_code": 201}
         user_repository.create_user.assert_called_once_with(user_dto)
 
-    def test_create_user_when_the_user_has_already_been_created(self, mocker: MockerFixture, db_session: Session):
+    def test_create_user_when_the_user_has_already_been_created(
+        self, mocker: MockerFixture, db_connection: DBConnectionHandler
+    ):
         """
         Test the create_user method of CreateUserUseCase when the user has already been created.
 
@@ -57,10 +59,10 @@ class TestCreateUserUseCase:
 
         Args:
             mocker (MockerFixture): The pytest mocker fixture.
-            db_session (Session): The SQLAlchemy database session fixture.
+            db_connection (DBConnectionHandler): A database connection handler for the test database.
 
         """
-        user_repository = mocker.Mock(spec=UserRepository(db_session))
+        user_repository = mocker.Mock(spec=UserRepository(db_connection=db_connection))
         user_service = CreateUserUseCase(user_repository=user_repository)
 
         user_dto = UserDTO(

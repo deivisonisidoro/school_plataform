@@ -1,6 +1,6 @@
 from sqlalchemy import Column, DateTime, Integer, String, UniqueConstraint
 from sqlalchemy.sql import func
-from src.infra.db.relational_db import Base
+from src.infra.db.settings import Base
 
 
 class UserModel(Base):

@@ -20,5 +20,5 @@ class TestRedirectToDocumentation:
             client (TestClient): The TestClient instance to make requests.
 
         """
-        response = client.get("/")
+        response = client.get("/api")
         assert response.status_code == 200

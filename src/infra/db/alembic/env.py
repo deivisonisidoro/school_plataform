@@ -7,9 +7,9 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from src.infra.db.relational_db import Base
+from src.infra.models import *
+from src.infra.db.settings import Base
 
-from src.infra.db.relational_db.models import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 load_dotenv(os.path.join(BASE_DIR, ".env"))

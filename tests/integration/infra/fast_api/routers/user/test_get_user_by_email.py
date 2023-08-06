@@ -2,6 +2,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 
+@pytest.mark.skip(reason="Test connected with local bd, and not with test bd")
 class TestGetUserByEmailEndpoint:
     """
     Test cases for the GetUserByEmail endpoint.

@@ -1,7 +1,6 @@
-from typing import Union
 from pydantic import BaseModel
 
-from src.infra.fast_api.schemas.user.user_out import UserOut
+from src.main.fast_api.schemas.user.user_out import UserOut
 
 
 class DefaultResponse(BaseModel):
@@ -18,5 +17,19 @@ class DefaultResponse(BaseModel):
 
     """
 
-    detail: Union[UserOut, str]
-    status_code: int
+    type: str
+    attributes: UserOut
+
+    class ConfigDict:
+        """
+        Pydantic configuration for the User schema.
+
+        The Config class allows configuring additional settings for the Pydantic model.
+
+        Attributes:
+            from_attributes (bool): If set to True, Pydantic will allow the model to work with SQLAlchemy's ORM,
+                             enabling automatic conversion between SQLAlchemy models and Pydantic models.
+
+        """
+
+        from_attributes = True

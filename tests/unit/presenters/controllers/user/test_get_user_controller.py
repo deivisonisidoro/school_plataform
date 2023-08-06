@@ -1,12 +1,11 @@
 import pytest
 from pytest_mock import MockerFixture
-from sqlalchemy.orm import Session
 
 from src.applications.dtos.user import UserDTO
-from src.applications.use_cases.user.get_user_by_email import GetUserUseCase
-from src.domain.use_cases.user.create_user import CreateUserUseCaseInterface
+from src.applications.use_cases.user.get_user import GetUserUseCase
 from src.domain.use_cases.user.get_user import GetUserUseCaseInterface
 from src.domain.repositories.user import UserRepositoryInterface
+from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
 from src.presenters.errors.http_errors import HttpErrors
 from src.presenters.controllers.user.get_user_controller import GetUserController
@@ -40,24 +39,24 @@ class TestGetUserController:
         return user_dto
 
     @pytest.fixture
-    def user_repository(self, mocker: MockerFixture, db_session: Session) -> UserRepositoryInterface:
+    def user_repository(self, mocker: MockerFixture, db_connection: DBConnectionHandler) -> UserRepositoryInterface:
         """
         Fixture that sets up a mocked UserRepository with a sample user.
 
         Args:
             mocker (MockerFixture): Pytest-mock fixture for creating mock objects.
-            db_session (Session): SQLAlchemy session fixture.
+            db_connection (Session): SQLAlchemy session fixture.
 
         Returns:
             UserRepositoryInterface: A mocked instance of the UserRepository.
         """
-        user_repository = mocker.Mock(spec=UserRepository(db_session))
+        user_repository = mocker.Mock(spec=UserRepository(db_connection=db_connection))
         return user_repository
 
     @pytest.fixture
     def get_user_use_case(
         self, user_repository: UserRepositoryInterface, mocker: MockerFixture
-    ) -> CreateUserUseCaseInterface:
+    ) -> GetUserUseCaseInterface:
         """
         Fixture that sets up the GetUserUseCase with a mocked UserRepository.
 
