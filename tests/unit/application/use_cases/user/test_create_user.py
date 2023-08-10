@@ -44,8 +44,7 @@ class TestCreateUserUseCase:
         user_repository.create_user.return_value = created_user_dto
         user_repository.get_user_by_email.return_value = None
         result = user_service.create_user(user_dto)
-
-        assert {"data": result, "status_code": 201}
+        assert {"data": result, "success": True}
         user_repository.create_user.assert_called_once_with(user_dto)
 
     def test_create_user_when_the_user_has_already_been_created(
@@ -76,4 +75,4 @@ class TestCreateUserUseCase:
         user_repository.get_user_by_email.return_value = created_user_dto
         result = user_service.create_user(user_dto)
 
-        assert result == {"data": UserErrorsEnum.EMAIL_ALREADY_EXISTS.value, "status_code": 400, "success": False}
+        assert result == {"data": UserErrorsEnum.EMAIL_ALREADY_EXISTS.value, "success": False}

@@ -4,6 +4,7 @@ from src.domain.use_cases.user.get_user import GetUserUseCaseInterface
 from src.presenters.errors import HttpErrors
 from src.presenters.helpers.http_types import HttpRequest, HttpResponse
 from src.main.interfaces import RouteInterface
+from src.presenters.success.http_success import HttpSuccess
 
 
 @dataclass
@@ -41,12 +42,11 @@ class GetUserController(RouteInterface):
                 email = http_request.query["email"]
                 response = self.get_user_use_case.get_user_by_email(email=email)
             else:
-                response = {"success": False, "data": None}
-            if response["success"] is False:
                 http_error = HttpErrors.error_422()
+                response = {"success": False, "data": http_error["body"], "status_code": http_error["status_code"]}
                 return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])
-
-            return HttpResponse(status_code=response["status_code"], body=response["data"])
-
-        http_error = HttpErrors.error_400()
-        return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])
+            if response["success"] is False:
+                http_error = HttpErrors.error_404()
+                return HttpResponse(status_code=http_error["status_code"], body=response["data"])
+            http_success = HttpSuccess.success_200(data=response["data"])
+            return HttpResponse(status_code=http_success["status_code"], body=http_success["body"])

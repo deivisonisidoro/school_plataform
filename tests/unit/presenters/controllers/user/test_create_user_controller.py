@@ -95,7 +95,6 @@ class TestCreateUserController:
         create_user_controller.create_user_use_case.create_user.return_value = {
             "data": user_dto,
             "success": True,
-            "status_code": 201,
         }
         response = create_user_controller.route(http_request=http_request)
         assert response.status_code == 201
@@ -108,9 +107,9 @@ class TestCreateUserController:
         Args:
             create_user_controller (RouteInterface): The CreateUserController fixture.
         """
-        http_request = HttpRequest()
+        http_request = HttpRequest(body={"test": "create_user"})
         create_user_controller.create_user_use_case.create_user.return_value = None
         response = create_user_controller.route(http_request=http_request)
 
-        assert response.status_code == HttpErrors.error_400()["status_code"]
-        assert response.body == HttpErrors.error_400()["body"]
+        assert response.status_code == HttpErrors.error_422()["status_code"]
+        assert response.body == HttpErrors.error_422()["body"]

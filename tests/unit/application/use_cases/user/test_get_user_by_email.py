@@ -96,18 +96,3 @@ class TestGetUserByEmail:
         user_repository.get_user_by_email.return_value = None
         result = get_user_use_case.get_user_by_email(email="test@example.com")
         assert result["data"] == UserErrorsEnum.READ_NOT_FOUND.value
-
-    def test_get_user_by_email_when_return_unknown_error(
-        self,
-        get_user_use_case: GetUserUseCaseInterface,
-    ) -> None:
-        """
-        Test the get_user_by_email method of GetUserUseCase when an unknown error occurs.
-
-        Args:
-            get_user_use_case (GetUserUseCaseInterface): The GetUserUseCase fixture.
-
-        """
-        get_user_use_case.user_repository.get_user_by_email.side_effect = Exception("Unknown error")
-        result = get_user_use_case.get_user_by_email(email="test@example.com")
-        assert result["data"] == UserErrorsEnum.DEFAULT_ERROR.value

@@ -5,6 +5,7 @@ from src.domain.use_cases.user.create_user import CreateUserUseCaseInterface
 from src.main.interfaces.route import RouteInterface
 from src.presenters.errors import HttpErrors
 from src.presenters.helpers.http_types import HttpRequest, HttpResponse
+from src.presenters.success.http_success import HttpSuccess
 
 
 @dataclass
@@ -45,10 +46,11 @@ class CreateUserController(RouteInterface):
                 )
                 response = self.create_user_use_case.create_user(user_dto=user_dto)
             else:
-                response = {"success": False, "data": None}
-            if response["success"] is False:
                 http_error = HttpErrors.error_422()
+                response = {"success": False, "data": http_error["body"], "status_code": http_error["status_code"]}
                 return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])
-            return HttpResponse(status_code=response["status_code"], body=response["data"])
-        http_error = HttpErrors.error_400()
-        return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])
+        if response["success"] is False:
+            http_error = HttpErrors.error_400()
+            return HttpResponse(status_code=http_error["status_code"], body=response["data"])
+        http_success = HttpSuccess.success_201(data=response["data"])
+        return HttpResponse(status_code=http_success["status_code"], body=http_success["body"])

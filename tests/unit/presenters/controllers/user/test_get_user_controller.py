@@ -99,26 +99,25 @@ class TestGetUserController:
         get_user_controller.get_user_use_case.get_user_by_email.return_value = {
             "data": user_dto,
             "success": True,
-            "status_code": 200,
         }
         response = get_user_controller.route(http_request=http_request)
 
         assert response.status_code == 200
         assert response.body == user_dto
 
-    def test_route_when_query_params_is_not_passed(self, get_user_controller: RouteInterface):
+    def test_route_when_query_params_is_not_passed_correctly(self, get_user_controller: RouteInterface):
         """
         Test that the route method of GetUserController returns user data when the email exists.
 
         Args:
             get_user_controller (RouteInterface): The GetUserController fixture.
         """
-        http_request = HttpRequest()
+        http_request = HttpRequest(query={"test": "test"})
         get_user_controller.get_user_use_case.get_user_by_email.return_value = None
         response = get_user_controller.route(http_request=http_request)
 
-        assert response.status_code == HttpErrors.error_400()["status_code"]
-        assert response.body == HttpErrors.error_400()["body"]
+        assert response.status_code == HttpErrors.error_422()["status_code"]
+        assert response.body == HttpErrors.error_422()["body"]
 
     def test_route_returns_user_data_when_email_does_not_exists(self, get_user_controller: RouteInterface):
         """
@@ -127,9 +126,12 @@ class TestGetUserController:
         Args:
             get_user_controller (RouteInterface): The GetUserController fixture.
         """
-        http_request = HttpRequest()
-        get_user_controller.get_user_use_case.get_user_by_email.return_value = None
+        http_request = HttpRequest(query={"email": "test@example.com"})
+        get_user_controller.get_user_use_case.get_user_by_email.return_value = {
+            "data": "Test Message",
+            "success": False,
+        }
         response = get_user_controller.route(http_request=http_request)
 
-        assert response.status_code == HttpErrors.error_400()["status_code"]
-        assert response.body == HttpErrors.error_400()["body"]
+        assert response.status_code == HttpErrors.error_404()["status_code"]
+        assert response.body == "Test Message"

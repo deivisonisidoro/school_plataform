@@ -29,11 +29,9 @@ def create_user(user: UserCreate, request: Request):
         dict: A dictionary containing the details of the created user.
     """
     request.json = user.__dict__
-    message = {}
     response = fast_api_adapter(request=request, api_route=create_user_composer())
     if response.status_code != status.HTTP_201_CREATED:
-        message = {"message": response.body}
-        raise HTTPException(status_code=response.status_code, detail=message)
+        raise HTTPException(status_code=response.status_code, detail=response.body)
 
     user_out = UserOut(
         id=response.body.id,
@@ -62,11 +60,9 @@ def get_user(request: Request):
     Returns:
         dict: A dictionary containing the details of the retrieved user.
     """
-    message = {}
     response = fast_api_adapter(request=request, api_route=get_user_composer())
     if response.status_code != status.HTTP_200_OK:
-        message = {"message": response.body}
-        raise HTTPException(status_code=response.status_code, detail=message)
+        raise HTTPException(status_code=response.status_code, detail=response.body)
 
     user_out = UserOut(
         id=response.body.id,
