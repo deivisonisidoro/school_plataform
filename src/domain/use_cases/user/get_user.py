@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from src.applications.dtos.user import UserDTO
-from src.domain.enums.user_error import UserErrorsEnum
+from src.domain.enums.user.errors import UserErrorsEnum
 from src.domain.repositories.user import UserRepositoryInterface
 
 

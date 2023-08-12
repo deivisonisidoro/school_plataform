@@ -2,7 +2,6 @@ import pytest
 from fastapi.testclient import TestClient
 
 
-@pytest.mark.skip(reason="Test connected with local bd, and not with test bd")
 class TestGetUserByEmailEndpoint:
     """
     Test cases for the GetUserByEmail endpoint.
@@ -26,7 +25,7 @@ class TestGetUserByEmailEndpoint:
             "password": "testpassword",
         }
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixture(autouse=False)
     def setup_and_teardown(self, client: TestClient, user_data):
         """
         Fixture that sets up and tears down the test database.
@@ -38,8 +37,6 @@ class TestGetUserByEmailEndpoint:
             user_data (dict): User data to create the user in the database.
         """
         client.post("/api/users/", json=user_data)
-        yield
-        client.delete("/api/users/", params={"email": user_data["email"]})
 
     def test_get_user_found(self, client: TestClient, user_data: dict):
         """
@@ -52,8 +49,11 @@ class TestGetUserByEmailEndpoint:
             client (TestClient): FastAPI TestClient instance.
             user_data (dict): User data used for the test.
         """
-        get_user_response = client.get(f"/api/users/{user_data['email']}")
+        client.post("/api/users/", json=user_data)
+        get_user_response = client.get(f"/api/users/?email={user_data['email']}")
         assert get_user_response.status_code == 200
+        user_id = get_user_response.json()["attributes"]["id"]
+        client.delete(f"/api/users/{user_id}")
 
     def test_get_user_not_found(self, client: TestClient):
         """
@@ -66,5 +66,5 @@ class TestGetUserByEmailEndpoint:
             client (TestClient): FastAPI TestClient instance.
         """
         non_existent_email = "nonexistent@example.com"
-        response = client.get(f"/api/users/{non_existent_email}")
+        response = client.get(f"/api/users/?email={non_existent_email}")
         assert response.status_code == 404

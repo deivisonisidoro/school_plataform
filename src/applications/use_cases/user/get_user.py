@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from src.applications.dtos.user import UserDTO
-from src.domain.enums.user_error import UserErrorsEnum
+from src.domain.enums.user.errors import UserErrorsEnum
 from src.domain.repositories.user import UserRepositoryInterface
 from src.domain.use_cases.user.get_user import GetUserUseCaseInterface
 

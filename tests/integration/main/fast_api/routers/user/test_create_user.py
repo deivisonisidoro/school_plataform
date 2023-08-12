@@ -2,7 +2,6 @@ import pytest
 from fastapi.testclient import TestClient
 
 
-@pytest.mark.skip(reason="Test connected with local bd, and not with test bd")
 class TestCreateUserEndpoint:
     """
     Test cases for user-related endpoints.
@@ -40,6 +39,8 @@ class TestCreateUserEndpoint:
         response = client.post("api/users/", json=user_data)
 
         assert response.status_code == 201
+        user_id = response.json()["attributes"]["id"]
+        client.delete(f"/api/users/{user_id}")
 
     def test_create_user_when_user_already_exist(self, client: TestClient, user_data: dict):
         """

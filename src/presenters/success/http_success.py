@@ -32,3 +32,13 @@ class HttpSuccess:
                 the provided data.
         """
         return {"status_code": 201, "body": data}
+
+    @staticmethod
+    def success_204(data=None):
+        """
+        Returns a dictionary representing an HTTP 204 No Content success response.
+
+        Returns:
+            Dict[str, int]: The HTTP success response with 'status_code' key set to 204 and the 'body' key contains the provided data.
+        """
+        return {"status_code": 204, "body": data}

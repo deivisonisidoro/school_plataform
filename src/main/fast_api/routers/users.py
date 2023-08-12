@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, Request, HTTPException
 
 from src.main.adapter import fast_api_adapter
-from src.main.composer.user import get_user_composer, create_user_composer
+from src.main.composer.user import get_user_composer, create_user_composer, delete_user_composer
 from src.main.fast_api.schemas import UserCreate, UserOut, DefaultResponse
 
 router = APIRouter()
@@ -71,3 +71,29 @@ def get_user(request: Request):
         created_at=response.body.created_at,
     )
     return DefaultResponse(type="Users", attributes=user_out)
+
+
+@router.delete(
+    "/{user_id}",
+    status_code=status.HTTP_200_OK,
+    summary="Delete user by ID",
+    description="Delete a user by their ID.",
+)
+def delete_user(request: Request):
+    """
+    Delete a user by their ID.
+
+    This endpoint deletes a user based on their ID.
+
+    Args:
+        user_id (int): The ID of the user to delete.
+        request (Request): The HTTP request object.
+
+    Returns:
+        None
+    """
+    response = fast_api_adapter(request=request, api_route=delete_user_composer())
+    if response.status_code != status.HTTP_200_OK:
+        raise HTTPException(status_code=response.status_code, detail=response.body)
+
+    return {"detail": response.body}

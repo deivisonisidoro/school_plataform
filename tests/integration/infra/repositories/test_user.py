@@ -53,6 +53,13 @@ class TestUserRepository:
         created_user = user_repository.create_user(user_dto)
         assert isinstance(created_user, UserDTO)
 
+    def test_create_user_with_exception(self, user_repository: UserRepositoryInterface, user_dto: UserDTO):
+        """Test creating a user with an exception raised during creation."""
+
+        user_dto.email = None
+        with pytest.raises(Exception):
+            user_repository.create_user(user_dto)
+
     def test_get_user_by_email_when_found_user(
         self,
         user_repository: UserRepositoryInterface,
@@ -83,3 +90,34 @@ class TestUserRepository:
         fetched_user = user_repository.get_user_by_email(email="test@example.com")
 
         assert not isinstance(fetched_user, UserDTO)
+
+    def test_delete_user(self, user_repository: UserRepositoryInterface, user_dto: UserDTO):
+        """
+        Test the deletion of a user.
+
+        This test verifies that the 'delete_user' method effectively removes a user from the database.
+
+        Args:
+            user_repository (UserRepositoryInterface): An instance of UserRepository.
+            user_dto (UserDTO): A UserDTO instance representing a sample user.
+        """
+        created_user = user_repository.create_user(user_dto)
+        user_repository.delete_user(created_user.id)
+        fetched_user = user_repository.get_user_by_id(created_user.id)
+        assert fetched_user is None
+
+    def test_delete_user_with_invalid_id(self, user_repository: UserRepositoryInterface):
+        """
+        Test deleting a user with an invalid ID.
+
+        This test verifies that the 'delete_user' method properly handles the scenario where
+        an attempt is made to delete a user using an ID that does not exist in the database.
+
+        Args:
+            user_repository (UserRepositoryInterface): An instance of UserRepository.
+
+        Raises:
+            Exception: If the 'delete_user' method does not handle the invalid ID case correctly.
+        """
+        with pytest.raises(Exception):
+            user_repository.delete_user(9999)

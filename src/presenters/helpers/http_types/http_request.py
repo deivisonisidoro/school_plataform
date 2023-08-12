@@ -16,3 +16,4 @@ class HttpRequest:
     header: Dict = None
     body: Dict = None
     query: Dict = None
+    path: Dict = None

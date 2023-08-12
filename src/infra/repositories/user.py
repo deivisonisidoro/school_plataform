@@ -74,6 +74,55 @@ class UserRepository(UserRepositoryInterface):
                         created_at=db_user.created_at,
                     )
                 return None
+            finally:
+                db_connection.session.close()
+
+    def get_user_by_id(self, user_id: int) -> Optional[UserDTO]:
+        """
+        Retrieve a user by their ID from the database.
+
+        Args:
+            user_id (int): The ID of the user to retrieve.
+
+        Returns:
+            UserDTO | None: The user DTO if found, or None if the user is not found.
+
+        Raises:
+            Exception: If an error occurs while retrieving the user.
+        """
+        with self.db_connection as db_connection:
+            try:
+                db_user = db_connection.session.query(UserModel).filter_by(id=user_id).first()
+                if db_user:
+                    return UserDTO(
+                        id=db_user.id,
+                        name=db_user.name,
+                        email=db_user.email,
+                        password=db_user.password,
+                        created_at=db_user.created_at,
+                    )
+                return None
+            finally:
+                db_connection.session.close()
+
+    def delete_user(self, user_id: int) -> None:
+        """
+        Delete a user by their ID from the database.
+
+        Args:
+            user_id (int): The ID of the user to delete.
+
+        Raises:
+            Exception: If an error occurs while deleting the user.
+        """
+        with self.db_connection as db_connection:
+            try:
+                db_user = db_connection.session.query(UserModel).filter_by(id=user_id).first()
+                if db_user:
+                    db_connection.session.delete(db_user)
+                    db_connection.session.commit()
+                else:
+                    raise Exception("User not found")
             except Exception as exception:
                 db_connection.session.rollback()
                 raise exception
