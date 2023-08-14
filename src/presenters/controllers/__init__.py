@@ -1,1 +1,1 @@
-from .user.get_user_controller import GetUserController
+from .user.get_user import GetUserController

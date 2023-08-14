@@ -2,7 +2,7 @@ from src.applications.use_cases.user.create_user import CreateUserUseCase
 from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
 from src.domain.controllers.controller import ControllerInterface
-from src.presenters.controllers.user.create_user_controller import CreateUserController
+from src.presenters.controllers.user.create_user import CreateUserController
 
 
 def create_user_composer() -> ControllerInterface:

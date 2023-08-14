@@ -1,10 +1,8 @@
 from dataclasses import dataclass
 
 from src.domain.use_cases.user.delete_user import DeleteUserUseCaseInterface
-from src.presenters.errors import HttpErrors
-from src.presenters.helpers.http_types import HttpRequest, HttpResponse
+from src.presenters.helpers.http_types import HttpRequest, HttpResponse, HttpErrors, HttpSuccess
 from src.domain.controllers import ControllerInterface
-from src.presenters.success.http_success import HttpSuccess
 
 
 @dataclass

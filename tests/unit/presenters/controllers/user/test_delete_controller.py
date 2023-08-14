@@ -10,8 +10,7 @@ from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
 from src.domain.controllers.controller import ControllerInterface
 from src.presenters.controllers.user.delete_user import DeleteUserController
-from src.presenters.errors.http_errors import HttpErrors
-from src.presenters.helpers.http_types.http_request import HttpRequest
+from src.presenters.helpers.http_types import HttpRequest, HttpErrors
 
 
 class TestDeleteController:

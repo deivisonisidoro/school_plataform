@@ -8,9 +8,8 @@ from src.domain.repositories.user import UserRepositoryInterface
 from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
 from src.domain.controllers import ControllerInterface
-from src.presenters.errors.http_errors import HttpErrors
-from src.presenters.controllers.user.get_user_controller import GetUserController
-from src.presenters.helpers.http_types import HttpRequest
+from src.presenters.controllers.user.get_user import GetUserController
+from src.presenters.helpers.http_types import HttpRequest, HttpErrors
 
 
 class TestGetUserController:
