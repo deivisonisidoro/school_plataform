@@ -3,12 +3,12 @@ from pytest_mock import MockerFixture
 
 from src.applications.dtos.user import UserDTO
 from src.applications.use_cases.user.delete_user_use_case import DeleteUserUseCase
-from src.domain.enums.user.success import UserSuccessEnum
+from src.applications.enums.user.success import UserSuccessEnum
 from src.domain.repositories.user import UserRepositoryInterface
 from src.domain.use_cases.user.delete_user import DeleteUserUseCaseInterface
 from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
-from src.main.interfaces.route import RouteInterface
+from src.domain.controllers.controller import ControllerInterface
 from src.presenters.controllers.user.delete_user import DeleteUserController
 from src.presenters.errors.http_errors import HttpErrors
 from src.presenters.helpers.http_types.http_request import HttpRequest
@@ -70,7 +70,7 @@ class TestDeleteController:
         return delete_user_use_case
 
     @pytest.fixture
-    def delete_user_controller(self, delete_user_use_case: DeleteUserUseCaseInterface) -> RouteInterface:
+    def delete_user_controller(self, delete_user_use_case: DeleteUserUseCaseInterface) -> ControllerInterface:
         """
         Fixture that sets up DeleteUserController for testing.
 
@@ -78,21 +78,21 @@ class TestDeleteController:
             delete_user_use_case (DeleteUserUseCaseInterface): The DeleteUserUseCase fixture.
 
         Returns:
-            RouteInterface: An instance of DeleteUserController.
+            ControllerInterface: An instance of DeleteUserController.
         """
         delete_user_controller = DeleteUserController(delete_user_use_case=delete_user_use_case)
         return delete_user_controller
 
     def test_route_delete_user_successful_deletion(
         self,
-        delete_user_controller: RouteInterface,
+        delete_user_controller: ControllerInterface,
         user_dto: UserDTO,
     ):
         """
         Test the route for deleting a user when the deletion is successful.
 
         Args:
-            delete_user_controller (RouteInterface): An instance of DeleteUserController.
+            delete_user_controller (ControllerInterface): An instance of DeleteUserController.
             user_dto (UserDTO): The UserDTO representing the user to be deleted.
         """
         http_request = HttpRequest(path={"user_id": user_dto.id})
@@ -106,12 +106,12 @@ class TestDeleteController:
         assert response.status_code == 200
         assert response.body == UserSuccessEnum.DELETE_SUCCESS.value
 
-    def test_route_path_not_passed(self, delete_user_controller: RouteInterface):
+    def test_route_path_not_passed(self, delete_user_controller: ControllerInterface):
         """
         Test the route behavior when the path is not passed.
 
         Args:
-            delete_user_controller (RouteInterface): An instance of DeleteUserController.
+            delete_user_controller (ControllerInterface): An instance of DeleteUserController.
         """
 
         http_request = HttpRequest(path={"test": "test"})
@@ -127,12 +127,12 @@ class TestDeleteController:
         assert response.status_code == http_error["status_code"]
         assert response.body == http_error["body"]
 
-    def test_route_not_delete_user_user_not_exists(self, delete_user_controller: RouteInterface):
+    def test_route_not_delete_user_user_not_exists(self, delete_user_controller: ControllerInterface):
         """
         Test that the route does not delete a user when the user does not exist.
 
         Args:
-            delete_user_controller (RouteInterface): An instance of DeleteUserController.
+            delete_user_controller (ControllerInterface): An instance of DeleteUserController.
         """
 
         http_request = HttpRequest(path={"user_id": "test@test.com"})

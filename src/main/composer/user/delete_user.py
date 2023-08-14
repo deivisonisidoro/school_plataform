@@ -1,11 +1,11 @@
 from src.applications.use_cases.user.delete_user_use_case import DeleteUserUseCase
 from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
-from src.main.interfaces.route import RouteInterface
+from src.domain.controllers.controller import ControllerInterface
 from src.presenters.controllers.user.delete_user import DeleteUserController
 
 
-def delete_user_composer() -> RouteInterface:
+def delete_user_composer() -> ControllerInterface:
     """
     Compose the necessary components for deleting a user account route.
 
@@ -15,7 +15,7 @@ def delete_user_composer() -> RouteInterface:
     associates it with the appropriate controller.
 
     Returns:
-        delete_user_controller (RouteInterface): An instance of the DeleteUserController configured for deleting user accounts.
+        delete_user_controller (ControllerInterface): An instance of the DeleteUserController configured for deleting user accounts.
     """
     repository = UserRepository(db_connection=DBConnectionHandler())
     delete_user_use_case = DeleteUserUseCase(user_repository=repository)

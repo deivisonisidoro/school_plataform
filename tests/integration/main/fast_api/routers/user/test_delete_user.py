@@ -1,7 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from src.domain.enums.user.success import UserSuccessEnum
+from src.applications.enums.user.success import UserSuccessEnum
 
 
 class TestDeleteUserByEmailEndpoint:

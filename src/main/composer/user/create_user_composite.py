@@ -1,11 +1,11 @@
 from src.applications.use_cases.user.create_user import CreateUserUseCase
 from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
-from src.main.interfaces.route import RouteInterface
+from src.domain.controllers.controller import ControllerInterface
 from src.presenters.controllers.user.create_user_controller import CreateUserController
 
 
-def create_user_composer() -> RouteInterface:
+def create_user_composer() -> ControllerInterface:
     """
     Compose the necessary components for creating a new user account route.
 
@@ -15,7 +15,7 @@ def create_user_composer() -> RouteInterface:
     associates it with the appropriate controller.
 
     Returns:
-        create_user_controller (RouteInterface): An instance of the CreateUserController configured for creating new user accounts.
+        create_user_controller (ControllerInterface): An instance of the CreateUserController configured for creating new user accounts.
     """
     repository = UserRepository(db_connection=DBConnectionHandler())
     create_user_use_case = CreateUserUseCase(user_repository=repository)

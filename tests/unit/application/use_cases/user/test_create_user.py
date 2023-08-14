@@ -2,7 +2,7 @@ from pytest_mock import MockerFixture
 
 from src.applications.dtos.user import UserDTO
 from src.applications.use_cases.user.create_user import CreateUserUseCase
-from src.domain.enums.user.errors import UserErrorsEnum
+from src.applications.enums.user.errors import UserErrorsEnum
 from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
 

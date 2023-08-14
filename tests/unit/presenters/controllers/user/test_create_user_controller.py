@@ -7,7 +7,7 @@ from src.domain.repositories.user import UserRepositoryInterface
 from src.domain.use_cases.user.create_user import CreateUserUseCaseInterface
 from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
-from src.main.interfaces.route import RouteInterface
+from src.domain.controllers.controller import ControllerInterface
 from src.presenters.controllers.user.create_user_controller import CreateUserController
 from src.presenters.errors.http_errors import HttpErrors
 from src.presenters.helpers.http_types.http_request import HttpRequest
@@ -69,7 +69,7 @@ class TestCreateUserController:
         return create_user_use_case
 
     @pytest.fixture
-    def create_user_controller(self, create_user_use_case: CreateUserUseCaseInterface) -> RouteInterface:
+    def create_user_controller(self, create_user_use_case: CreateUserUseCaseInterface) -> ControllerInterface:
         """
         Fixture that sets up CreateUserController for testing.
 
@@ -77,7 +77,7 @@ class TestCreateUserController:
             create_user_use_case (CreateUserUseCaseInterface): The CreateUserUseCase fixture.
 
         Returns:
-            create_user_controller (RouteInterface): An instance of CreateUserController.
+            create_user_controller (ControllerInterface): An instance of CreateUserController.
         """
         create_user_controller = CreateUserController(create_user_use_case=create_user_use_case)
         return create_user_controller
@@ -100,12 +100,12 @@ class TestCreateUserController:
         assert response.status_code == 201
         assert response.body == user_dto
 
-    def test_route_when_body_params_are_not_passed(self, create_user_controller: RouteInterface):
+    def test_route_when_body_params_are_not_passed(self, create_user_controller: ControllerInterface):
         """
         Test that the route method of CreateUserController handles missing body parameters correctly.
 
         Args:
-            create_user_controller (RouteInterface): The CreateUserController fixture.
+            create_user_controller (ControllerInterface): The CreateUserController fixture.
         """
         http_request = HttpRequest(body={"test": "create_user"})
         create_user_controller.create_user_use_case.create_user.return_value = None

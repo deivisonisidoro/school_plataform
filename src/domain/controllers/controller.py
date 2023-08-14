@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from src.presenters.helpers.http_types import HttpRequest, HttpResponse
 
 
-class RouteInterface(ABC):
+class ControllerInterface(ABC):
     """Interface for defining a route."""
 
     @abstractmethod
