@@ -1,7 +1,7 @@
 import os
 from typing import Generator
 import pytest
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.orm import sessionmaker
 
 from src.infra.db.settings import Base, DBConnectionHandler
 
@@ -41,4 +41,3 @@ class TestDB:
     @classmethod
     def teardown_class(cls):
         """Teardown method called after completing the test class."""
-        pass
