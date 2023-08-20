@@ -25,6 +25,6 @@ class UserEntity:
         """Return a string representation of the user.
 
         Returns:
-            str: A string representation of the user.
+            (str): A string representation of the user.
         """
         return f"User(id={self.id}, name={self.name}, email={self.email})"

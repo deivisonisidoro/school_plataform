@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from src.domain.use_cases.user.delete_user import DeleteUserUseCaseInterface
 from src.presenters.helpers.http_types import HttpRequest, HttpResponse, HttpErrors, HttpSuccess
-from src.domain.controllers import ControllerInterface
+from src.domain.controller import ControllerInterface
 
 
 @dataclass
@@ -15,7 +15,7 @@ class DeleteUserController(ControllerInterface):
             the necessary functionality to fetch user data.
 
     Returns:
-        HttpResponse: An HTTP response object containing the result of the user retrieval operation.
+        (HttpResponse): An HTTP response object containing the result of the user retrieval operation.
     """
 
     delete_user_use_case: DeleteUserUseCaseInterface
@@ -28,7 +28,7 @@ class DeleteUserController(ControllerInterface):
             http_request (HttpRequest): An HTTP request object containing the request data.
 
         Returns:
-            HttpResponse: An HTTP response object containing the result of the user retrieval operation.
+            (HttpResponse): An HTTP response object containing the result of the user retrieval operation.
                 If successful, it contains a status code 200 and the user data in the 'body'.
                 If the user is not found or any error occurs during retrieval, it returns an appropriate
                 error response with the corresponding status code and error message in the 'body'.

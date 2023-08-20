@@ -7,7 +7,7 @@ from src.domain.use_cases.user.get_user import GetUserUseCaseInterface
 from src.domain.repositories.user import UserRepositoryInterface
 from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
-from src.domain.controllers import ControllerInterface
+from src.domain.controller import ControllerInterface
 from src.presenters.controllers.user.get_user import GetUserController
 from src.presenters.helpers.http_types import HttpRequest, HttpErrors
 

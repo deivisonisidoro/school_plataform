@@ -26,7 +26,7 @@ def create_user(user: UserCreate, request: Request):
         request (Request): The HTTP request object.
 
     Returns:
-        dict: A dictionary containing the details of the created user.
+        (dict): A dictionary containing the details of the created user.
     """
     request.json = user.__dict__
     response = fast_api_adapter(request=request, api_route=create_user_composer())
@@ -58,7 +58,7 @@ def get_user(request: Request):
         request (Request): The HTTP request object.
 
     Returns:
-        dict: A dictionary containing the details of the retrieved user.
+        (dict): A dictionary containing the details of the retrieved user.
     """
     response = fast_api_adapter(request=request, api_route=get_user_composer())
     if response.status_code != status.HTTP_200_OK:
@@ -86,11 +86,10 @@ def delete_user(request: Request):
     This endpoint deletes a user based on their ID.
 
     Args:
-        user_id (int): The ID of the user to delete.
         request (Request): The HTTP request object.
 
     Returns:
-        None
+        (dict): Returns a dictionary with a message indicating success or failure
     """
     response = fast_api_adapter(request=request, api_route=delete_user_composer())
     if response.status_code != status.HTTP_200_OK:

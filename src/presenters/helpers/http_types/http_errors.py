@@ -9,7 +9,7 @@ class HttpErrors:
         Returns a dictionary representing an HTTP 422 Unprocessable Entity error response.
 
         Returns:
-            Dict[str, Union[int, Dict[str, str]]]: The HTTP error response with 'status_code' and 'body' keys.
+            (Dict[str, Union[int, Dict[str, str]]]): The HTTP error response with 'status_code' and 'body' keys.
                 The 'status_code' key contains the HTTP status code 422, and the 'body' key contains
                 an error message for Unprocessable Entity.
         """
@@ -21,7 +21,7 @@ class HttpErrors:
         Returns a dictionary representing an HTTP 400 Bad Request error response.
 
         Returns:
-            Dict[str, Union[int, Dict[str, str]]]: The HTTP error response with 'status_code' and 'body' keys.
+            (Dict[str, Union[int, Dict[str, str]]]): The HTTP error response with 'status_code' and 'body' keys.
                 The 'status_code' key contains the HTTP status code 400, and the 'body' key contains
                 an error message for Bad Request.
         """
@@ -33,7 +33,7 @@ class HttpErrors:
         Returns a dictionary representing an HTTP 404 Not Found error response.
 
         Returns:
-            Dict[str, Union[int, Dict[str, str]]]: The HTTP error response with 'status_code' and 'body' keys.
+            (Dict[str, Union[int, Dict[str, str]]]): The HTTP error response with 'status_code' and 'body' keys.
                 The 'status_code' key contains the HTTP status code 404, and the 'body' key contains
                 an error message for Not Found.
         """

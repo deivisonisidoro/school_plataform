@@ -1,7 +1,7 @@
-from src.applications.use_cases.user.delete_user_use_case import DeleteUserUseCase
+from src.applications.use_cases.user.delete_user import DeleteUserUseCase
 from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
-from src.domain.controllers.controller import ControllerInterface
+from src.domain.controller import ControllerInterface
 from src.presenters.controllers.user.delete_user import DeleteUserController
 
 

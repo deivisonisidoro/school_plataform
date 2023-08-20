@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from src.applications.dtos.user import UserDTO
 from src.domain.use_cases.user.create_user import CreateUserUseCaseInterface
-from src.domain.controllers.controller import ControllerInterface
+from src.domain.controller import ControllerInterface
 from src.presenters.helpers.http_types import HttpRequest, HttpResponse, HttpErrors, HttpSuccess
 
 

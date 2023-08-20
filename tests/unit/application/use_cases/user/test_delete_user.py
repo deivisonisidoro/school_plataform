@@ -2,7 +2,7 @@ import pytest
 from pytest_mock import MockerFixture
 
 from src.applications.dtos.user import UserDTO
-from src.applications.use_cases.user.delete_user_use_case import DeleteUserUseCase
+from src.applications.use_cases.user.delete_user import DeleteUserUseCase
 from src.applications.enums.user.errors import UserErrorsEnum
 from src.applications.enums.user.success import UserSuccessEnum
 from src.domain.repositories.user import UserRepositoryInterface

@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
+from sqlalchemy import Engine, create_engine
 from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
@@ -25,11 +25,11 @@ class DBConnectionHandler:
         self.engine = self.__create_database_engine()
         self.session = None
 
-    def __create_database_engine(self):
+    def __create_database_engine(self) -> Engine:
         """Create a new SQLAlchemy database engine.
 
         Returns:
-            Engine: The created SQLAlchemy engine.
+            (Engine): The created SQLAlchemy engine.
         """
         engine = create_engine(self.connection_string)
         return engine
@@ -38,7 +38,7 @@ class DBConnectionHandler:
         """Get the underlying SQLAlchemy database engine.
 
         Returns:
-            Engine: The SQLAlchemy database engine.
+            (Engine): The SQLAlchemy database engine.
         """
         return self.engine
 
@@ -46,7 +46,7 @@ class DBConnectionHandler:
         """Enter method for context management.
 
         Returns:
-            DBConnectionHandler: This instance.
+            (DBConnectionHandler): This instance.
         """
         session_make = sessionmaker(bind=self.engine)
         self.session = session_make()
@@ -56,8 +56,8 @@ class DBConnectionHandler:
         """Exit method for context management.
 
         Args:
-            exc_type: The exception type, if any.
-            exc_val: The exception value, if any.
-            exc_tb: The exception traceback, if any.
+            exc_type (Any): The exception type, if any.
+            exc_val (Any): The exception value, if any.
+            exc_tb (Any): The exception traceback, if any.
         """
         self.session.close()

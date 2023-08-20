@@ -1,4 +1,4 @@
-from src.domain.controllers import ControllerInterface
+from src.domain.controller import ControllerInterface
 from src.infra.db.settings.connection import DBConnectionHandler
 from src.presenters.controllers import GetUserController
 from src.applications.use_cases.user.get_user import GetUserUseCase

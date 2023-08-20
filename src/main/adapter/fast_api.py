@@ -1,4 +1,4 @@
-from src.domain.controllers import ControllerInterface
+from src.domain.controller import ControllerInterface
 from src.presenters.helpers.http_types import HttpRequest, HttpResponse
 
 

@@ -7,7 +7,7 @@ from src.domain.repositories.user import UserRepositoryInterface
 from src.domain.use_cases.user.create_user import CreateUserUseCaseInterface
 from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.repositories.user import UserRepository
-from src.domain.controllers.controller import ControllerInterface
+from src.domain.controller import ControllerInterface
 from src.presenters.controllers.user.create_user import CreateUserController
 from src.presenters.helpers.http_types import HttpRequest, HttpErrors
 

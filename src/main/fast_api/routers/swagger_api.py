@@ -18,7 +18,7 @@ def redirect_api_documentation():
     The Swagger UI provides a user-friendly interface to explore and interact with the API endpoints.
 
     Returns:
-        RedirectResponse: A redirect response to the Swagger API documentation page.
+        (RedirectResponse): A redirect response to the Swagger API documentation page.
 
     """
     return RedirectResponse(url="/swagger/doc")

@@ -12,7 +12,7 @@ class HttpSuccess:
             data (Any, optional): The data to include in the response body. Defaults to None.
 
         Returns:
-            Dict[str, Union[int, Any]]: The HTTP success response with 'status_code' and 'body' keys.
+           ( Dict[str, Union[int, Any]]): The HTTP success response with 'status_code' and 'body' keys.
                 The 'status_code' key contains the HTTP status code 200, and the 'body' key contains
                 the provided data.
         """
@@ -27,7 +27,7 @@ class HttpSuccess:
             data (Any, optional): The data to include in the response body. Defaults to None.
 
         Returns:
-            Dict[str, Union[int, Any]]: The HTTP success response with 'status_code' and 'body' keys.
+           ( Dict[str, Union[int, Any]]): The HTTP success response with 'status_code' and 'body' keys.
                 The 'status_code' key contains the HTTP status code 201, and the 'body' key contains
                 the provided data.
         """

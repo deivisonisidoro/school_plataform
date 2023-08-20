@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from src.domain.use_cases.user.get_user import GetUserUseCaseInterface
 from src.presenters.helpers.http_types import HttpRequest, HttpResponse, HttpErrors, HttpSuccess
-from src.domain.controllers import ControllerInterface
+from src.domain.controller import ControllerInterface
 
 
 @dataclass
@@ -15,7 +15,7 @@ class GetUserController(ControllerInterface):
             the necessary functionality to fetch user data.
 
     Returns:
-        HttpResponse: An HTTP response object containing the result of the user retrieval operation.
+        (HttpResponse): An HTTP response object containing the result of the user retrieval operation.
     """
 
     get_user_use_case: GetUserUseCaseInterface
@@ -28,7 +28,7 @@ class GetUserController(ControllerInterface):
             http_request (HttpRequest): An HTTP request object containing the request data.
 
         Returns:
-            HttpResponse: An HTTP response object containing the result of the user retrieval operation.
+            (HttpResponse): An HTTP response object containing the result of the user retrieval operation.
                 If successful, it contains a status code 200 and the user data in the 'body'.
                 If the user is not found or any error occurs during retrieval, it returns an appropriate
                 error response with the corresponding status code and error message in the 'body'.
