@@ -1,0 +1,1 @@
+::: tests.integration.main.fast_api.routers.user.test_delete_user

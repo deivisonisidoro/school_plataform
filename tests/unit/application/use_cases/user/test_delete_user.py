@@ -22,7 +22,7 @@ class TestDeleteUserUserCase:
         Fixture that returns a sample UserDTO instance for testing.
 
         Returns:
-        user_dto (UserDTO): A UserDTO instance representing a sample user.
+            user_dto (UserDTO): A UserDTO instance representing a sample user.
         """
         user_dto = UserDTO(
             id=1,
@@ -39,11 +39,11 @@ class TestDeleteUserUserCase:
         Fixture that sets up a mocked UserRepository with a sample user.
 
         Args:
-        mocker (MockerFixture): Pytest-mock fixture for creating mock objects.
-        db_connection (DBConnectionHandler): A database connection handler for the test database.
+            mocker (MockerFixture): Pytest-mock fixture for creating mock objects.
+            db_connection (DBConnectionHandler): A database connection handler for the test database.
 
         Returns:
-        user_repository (UserRepositoryInterface): A mocked instance of the UserRepository.
+            user_repository (UserRepositoryInterface): A mocked instance of the UserRepository.
         """
         user_repository = mocker.Mock(spec=UserRepository(db_connection=db_connection))
         return user_repository
@@ -54,10 +54,10 @@ class TestDeleteUserUserCase:
         Fixture that sets up the DeleteUserUseCase with a mocked UserRepository.
 
         Args:
-        user_repository (UserRepositoryInterface): The UserRepository fixture.
+            user_repository (UserRepositoryInterface): The UserRepository fixture.
 
         Returns:
-        delete_user_use_case (DeleteUserUseCaseInterface): An instance of DeleteUserUseCase with the mock UserRepository.
+            delete_user_use_case (DeleteUserUseCaseInterface): An instance of DeleteUserUseCase with the mock UserRepository.
         """
         delete_user_use_case = DeleteUserUseCase(user_repository=user_repository)
         return delete_user_use_case

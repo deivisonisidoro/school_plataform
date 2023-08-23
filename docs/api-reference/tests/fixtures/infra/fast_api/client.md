@@ -1,0 +1,1 @@
+::: tests.fixtures.infra.fast_api.client

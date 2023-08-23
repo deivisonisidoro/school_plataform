@@ -1,0 +1,1 @@
+::: tests.fixtures.infra.entities.user

@@ -85,7 +85,6 @@ class TestUserRepository:
 
         Args:
             user_repository (UserRepositoryInterface): The UserRepository fixture.
-            user_dto (UserDTO): UserDTO fixture containing sample user data.
         """
         fetched_user = user_repository.get_user_by_email(email="test@example.com")
 

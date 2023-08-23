@@ -1,0 +1,1 @@
+::: tests.unit.application.use_cases.user.test_create_user

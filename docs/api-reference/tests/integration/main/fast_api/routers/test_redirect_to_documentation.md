@@ -1,0 +1,1 @@
+::: tests.integration.main.fast_api.routers.test_redirect_to_documentation
